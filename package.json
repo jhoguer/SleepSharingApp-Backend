@@ -1,0 +1,27 @@
+{
+  "name": "sleepsharingapp-backend",
+  "version": "1.0.0",
+  "description": "Backend of the app SleepSharingApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhoguer/SleepSharingApp-Backend.git"
+  },
+  "keywords": [
+    "backend",
+    "nodeJs",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhoguer/SleepSharingApp-Backend/issues"
+  },
+  "homepage": "https://github.com/jhoguer/SleepSharingApp-Backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
