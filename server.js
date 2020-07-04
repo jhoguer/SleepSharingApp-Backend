@@ -1,5 +1,7 @@
 const express = require('express');
 const { config } = require('./config');
+const rooms = require('./api/rooms/routes');
+const users = require('./api/users/routes');
 
 const app = express();
 
@@ -7,7 +9,8 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 
 // routes
-
+app.use('/api/users', users);
+app.use('/api/rooms', rooms);
 
 // catch 404
 
