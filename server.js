@@ -7,6 +7,7 @@ const app = express();
 
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // routes
 app.use('/api/users', users);
@@ -16,6 +17,11 @@ app.use('/api/rooms', rooms);
 
 
 // Errors middleware
+
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  res.status(500).send('Algo salio mal');
+})
 
 // Server
 app.listen(config.port, () => {
