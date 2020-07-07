@@ -31,6 +31,13 @@ class MongoLib {
     return MongoLib.connection;
   }
 
+  getAll(collection) {
+    return this.connect()
+      .then(db => {
+        return db.collection(collection).find().toArray();
+      })
+  }
+
   create(collection, data) {
     // console.log('data=> ', data)
     // console.log('Collection=> ', collection)

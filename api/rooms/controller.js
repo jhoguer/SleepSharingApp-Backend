@@ -15,8 +15,9 @@ const addRoom = async (roomData) => {
     
 }
 
-const getRooms = () => {
-  
+const getRooms = async () => {
+  const allRooms = await db.getAll(collection);
+  return allRooms;
 }
 
 module.exports = {
