@@ -7,12 +7,15 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   // const searchParams = req.query.roomParam || {};
-  const data = req.body || {};
-  console.log(data)
 
-  res.status(200).json({
-    devuleve: data
-  });
+  controller.getRooms()
+    .then(data => {
+      response.success(req, res, data, 200);
+    })
+    .catch(err => {
+      response.error(req, res, 'Server Error', 500, err);
+    })
+
 });
 
 router.get('/:id', (req, res, next) => {
