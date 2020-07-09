@@ -7,8 +7,12 @@ const router = express.Router();
 
 
 router.get('/', (req, res, next) => {
-  res.status(200).json({
-    devuelve: 'datos de 1 usuario'
+  controller.getUsers()
+  .then(data => {
+    response.success(req, res, data, 200);
+  })
+  .catch(err => {
+    response.error(req, res, 'Server Error', 500, err);
   })
 });
 
@@ -23,5 +27,30 @@ router.post('/', (req, res, next) => {
       response.error(req, res, 'Server error', 500, err);
     });
 });
+
+router.patch('/', (req, res, next) => {
+  const { idHost, idRoom } = req.body;
+
+  controller.addRoomToHost(idRoom, idHost)
+    .then(id => {
+      response.success(req, res, id, 200);
+    })
+    .catch(err => {
+      response.error(req, res, 'Server error', 500, err);
+    })
+})
+
+router.patch('/:id/fav', (req, res, next) => {
+  const { id: idUSer } = req.params;
+  const { idRoom } = req.query;
+
+  controller.addFavorites(idUSer, idRoom)
+    .then(id => {
+      response.success(req, res, id, 200);
+    })
+    .catch(err => {
+      response.error(req, res, 'Server error', 500, err);
+    })
+})
 
 module.exports = router;

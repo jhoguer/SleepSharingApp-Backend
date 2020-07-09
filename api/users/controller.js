@@ -13,6 +13,26 @@ const addUser = async (userData) => {
   return createdUserId;
 }
 
+const getUsers = async () => {
+  const allUsers = await db.getAll(collection);
+  return allUsers;
+}
+
+const addFavorites = async (idUser, idRoom) => {
+  const addFavoritesUserId = await db.addFavoritesRoom(idUser, idRoom);
+
+  return addFavoritesUserId;
+}
+
+const addRoomToHost = async (idUser, idRoom) => {
+  const updatedUserId = await db.addHost(idUser, idRoom);
+
+  return updatedUserId;
+}
+
 module.exports = {
   addUser,
+  getUsers,
+  addRoomToHost,
+  addFavorites
 }

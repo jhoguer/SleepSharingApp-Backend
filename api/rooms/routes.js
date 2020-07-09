@@ -19,9 +19,15 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  res.status(200).json({
-    devuelve: 'Una habitaion'
-  });
+  const {id} = req.params || '';
+  console.log('Id en routes======>', id);
+  controller.get(id)
+    .then(data => {
+      response.success(req, res, data, 200);
+    })
+    .catch(err => {
+      response.error(req, res, 'Server error', 500, err);
+    });
 });
 
 router.post('/', (req, res, next) => {
@@ -46,5 +52,18 @@ router.post('/', (req, res, next) => {
 //     devuelve: 'Todas las habitaiones'
 //   });
 // });
+
+
+router.patch('/', (req, res, next) => {
+  const { idHost, idRoom } = req.body;
+
+  controller.updateUser(idHost, idRoom)
+    .then(id => {
+      response.success(req, res, id, 200);
+    })
+    .catch(err => {
+      response.error(req, res, 'Server error', 500, err);
+    })
+})
 
 module.exports = router;
