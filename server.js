@@ -2,6 +2,7 @@ const express = require('express');
 const { config } = require('./config');
 const rooms = require('./api/rooms/routes');
 const users = require('./api/users/routes');
+const auth = require('./api/auth/routes');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 // routes
 app.use('/api/users', users);
 app.use('/api/rooms', rooms);
+app.use('/api/auth', auth);
 
 // catch 404
 

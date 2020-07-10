@@ -1,16 +1,36 @@
 const MongoLib = require('../../db/mongo');
-
+const auth = require('../auth/controller');
 const collection = 'users';
 
 const db = new MongoLib();
 
 const addUser = async (userData) => {
 
+
+  const userForAuth = {
+    username: userData.email,
+    password: userData.password
+  }
+
   // Validar que todos los datos lleguen
+  if (userData.typeUser === 1) {
+    userData.typeUser = 'Anfitrion';
+  } else {
+    userData.typeUser = 'Huesped';
+  }
 
-  const createdUserId = await db.create(collection, userData);
+  try {
+    const createdUserId = await db.create(collection, userData);  
+    userForAuth.idUser = createdUserId;
+  
+    await auth.addUserAuth(userForAuth);
 
-  return createdUserId;
+    return createdUserId;    
+  } catch (error) {
+    throw new Error(error)
+  }
+
+
 }
 
 const getUsers = async () => {
@@ -19,20 +39,20 @@ const getUsers = async () => {
 }
 
 const addFavorites = async (idUser, idRoom) => {
-  const addFavoritesUserId = await db.addFavoritesRoom(idUser, idRoom);
+  const addFavoritesUserId = await db.addHostOrFav(idUser, { 'favorites': idRoom });
 
   return addFavoritesUserId;
 }
 
-const addRoomToHost = async (idUser, idRoom) => {
-  const updatedUserId = await db.addHost(idUser, idRoom);
+// const addRoomToHost = async (idUser, idRoom) => {
+//   const updatedUserId = await db.addHost(idUser, idRoom);
 
-  return updatedUserId;
-}
+//   return updatedUserId;
+// }
 
 module.exports = {
   addUser,
   getUsers,
-  addRoomToHost,
+  // addRoomToHost,
   addFavorites
 }

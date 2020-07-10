@@ -45,6 +45,16 @@ class MongoLib {
       })
   }
 
+  getAuth(collection, username) {
+    return this.connect()
+      .then(db => {
+        return db.collection(collection).findOne({ username: username });
+      })
+      .catch(err => {
+        throw new Error(err);
+      })
+  }
+
   create(collection, data) {
     // console.log('data=> ', data)
     // console.log('Collection=> ', collection)
@@ -52,19 +62,24 @@ class MongoLib {
     const {idHost} = data;
 
     if (!data.firstName) {
+      // return this.connect().then(db => {
+      //     return db.collection(collection).insertOne(data);
+      //   })
+      //   .then(result => {
+      //     return this.addHostOrFav(idHost, { 'ownRooms': result.insertedId });
+      //   })
+      //   .then(result => result.upsertedId || idHost);
+
       return this.connect().then(db => {
-          return db.collection(collection).insertOne(data);
-        })
-        .then(result => {
-          return this.addHost(result.insertedId, idHost);
-        })
-        .then(result => result.upsertedId || idHost);
+        return db.collection(collection).insertOne(data);
+      })
+      .then(result => result.insertedId);
     }
 
     return this.connect().then(db => {
       return db.collection(collection).insertOne(data);
     })
-    .then(result => result.insertedId || idHost);
+    .then(result => result.insertedId);
     
 
 
@@ -72,18 +87,18 @@ class MongoLib {
 
   // result.insertedId
 
-  addHost(idRoom, idHost) {
-    return this.connect()
-      .then(db => {
-        return db.collection('users').updateOne({ _id: ObjectId(idHost) }, { $addToSet: { 'ownRooms':  ObjectId(idRoom) }}, { upsert: false });
-        // return db.collection('users').findOne({ _id: ObjectId(idHost) });
-      }).then(result => result.upsertedId || idHost);
-  }
+  // addHost(idRoom, idHost) {
+  //   return this.connect()
+  //     .then(db => {
+  //       return db.collection('users').updateOne({ _id: ObjectId(idHost) }, { $addToSet: { 'ownRooms':  ObjectId(idRoom) }}, { upsert: false });
+  //       // return db.collection('users').findOne({ _id: ObjectId(idHost) });
+  //     }).then(result => result.upsertedId || idHost);
+  // }
 
-  addFavoritesRoom(idUser, idRoom) {
+  addHostOrFav(idUser, data) {
     return this.connect()
       .then(db => {
-        return db.collection('users').updateOne({ _id: ObjectId(idUser) }, { $addToSet: { 'favorites':  ObjectId(idRoom) }}, { upsert: false });
+        return db.collection('users').updateOne({ _id: ObjectId(idUser) }, { $addToSet: data }, { upsert: true });
         // return db.collection('users').findOne({ _id: ObjectId(idHost) });
       }).then(result => result.upsertedId || idUser);
   }

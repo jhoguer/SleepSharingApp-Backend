@@ -28,21 +28,24 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.patch('/', (req, res, next) => {
-  const { idHost, idRoom } = req.body;
+// router.patch('/', (req, res, next) => {
+//   const { idHost, idRoom } = req.body;
 
-  controller.addRoomToHost(idRoom, idHost)
-    .then(id => {
-      response.success(req, res, id, 200);
-    })
-    .catch(err => {
-      response.error(req, res, 'Server error', 500, err);
-    })
-})
+//   controller.addRoomToHost(idRoom, idHost)
+//     .then(id => {
+//       response.success(req, res, id, 200);
+//     })
+//     .catch(err => {
+//       response.error(req, res, 'Server error', 500, err);
+//     })
+// })
 
 router.patch('/:id/fav', (req, res, next) => {
   const { id: idUSer } = req.params;
   const { idRoom } = req.query;
+
+  console.log(idUSer)
+  console.log(idRoom)
 
   controller.addFavorites(idUSer, idRoom)
     .then(id => {
