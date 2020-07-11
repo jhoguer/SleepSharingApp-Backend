@@ -12,6 +12,12 @@ const login = async (username, password) => {
   
   const userData = await db.getAuth(collection, username);
 
+  const isSame = await bcrypt.compare(password, userData.password);
+
+  if (isSame) {
+    // Firmar token
+  }
+
   return userData;
 }
 

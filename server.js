@@ -1,10 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const { config } = require('./config');
 const rooms = require('./api/rooms/routes');
 const users = require('./api/users/routes');
 const auth = require('./api/auth/routes');
 
 const app = express();
+
+// Cors
+app.use(cors());
 
 
 app.use(express.urlencoded({ extended: false }));
