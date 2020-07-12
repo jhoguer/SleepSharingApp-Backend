@@ -15,16 +15,16 @@ const addRoom = async (roomData) => {
   // Validar que todos los datos vengan.
   
   const { idHost,  } = roomData;  
+  // Consultar en la BD si ese IDHost Existe
   
-  console.log('Id del Usuario Anfitrion', idHost);
+
   
   const createdRoomId = await db.create(collection, roomData);
-  console.log('Id de la Habitacion creada', createdRoomId);
+
   // const updatedUserId = await db.addHost(createdRoomId, idHost)
   // console.log('Id de la Room actualizada despues de crear room', updatedUserId);
   const roomAddToUserId = await db.addHostOrFav(idHost, { 'ownRooms': createdRoomId });
-  console.log(roomAddToUserId)
-  console.log(createdRoomId)
+
 
   if (!createdRoomId && !updatedRoomId) {
     throw new Error('Error server-');
@@ -49,16 +49,16 @@ const get = async (id) => {
   return room;
 }
 
-const updateUser = async (idRoom, idHost) => {
-  const updateUserId = await db.addHostOrFav(idHost, { 'ownRooms':  ObjectId(idRoom) });
-  return updateUserId;
-}
+// const updateUser = async (idRoom, idHost) => {
+//   const updateUserId = await db.addHostOrFav(idHost, { 'ownRooms':  ObjectId(idRoom) });
+//   return updateUserId;
+// }
 
 
 
 module.exports = {
   addRoom,
   getRooms,
-  updateUser,
+  // updateUser,
   get,
 };

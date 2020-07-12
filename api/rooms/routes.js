@@ -54,16 +54,16 @@ router.post('/', (req, res, next) => {
 // });
 
 
-router.patch('/', (req, res, next) => {
-  const { idHost, idRoom } = req.body;
+// router.patch('/', (req, res, next) => {
+//   const { idHost, idRoom } = req.body;
 
-  controller.updateUser(idHost, idRoom)
-    .then(id => {
-      response.success(req, res, id, 200);
-    })
-    .catch(err => {
-      response.error(req, res, 'Server error', 500, err);
-    })
-})
+//   controller.updateUser(idHost, idRoom)
+//     .then(id => {
+//       response.success(req, res, id, 200);
+//     })
+//     .catch(err => {
+//       response.error(req, res, 'Server error', 500, err);
+//     })
+// })
 
 module.exports = router;

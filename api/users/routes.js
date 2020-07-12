@@ -1,6 +1,7 @@
 const express = require('express');
 const controller = require('./controller');
 const response = require('../../utils/response');
+const secure = require('./secure');
 
 
 const router = express.Router();
@@ -40,7 +41,7 @@ router.post('/', (req, res, next) => {
 //     })
 // })
 
-router.patch('/:id/fav', (req, res, next) => {
+router.patch('/:id/fav', secure('addFavorites'), (req, res, next) => {
   const { id: idUSer } = req.params;
   const { idRoom } = req.query;
 

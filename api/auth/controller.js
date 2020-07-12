@@ -1,6 +1,8 @@
 const MongoLib = require('../../db/mongo');
 const bcrypt = require('bcrypt');
 
+const authJWT = require('../../auth/index');
+
 const collection = 'auth';
 
 const db = new MongoLib();
@@ -15,7 +17,9 @@ const login = async (username, password) => {
   const isSame = await bcrypt.compare(password, userData.password);
 
   if (isSame) {
-    // Firmar token
+    return authJWT.sign(userData);
+  } else {
+    throw new Error('Invalid username or password');
   }
 
   return userData;

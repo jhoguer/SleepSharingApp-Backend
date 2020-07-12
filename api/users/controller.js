@@ -39,6 +39,8 @@ const getUsers = async () => {
 }
 
 const addFavorites = async (idUser, idRoom) => {
+  // Consultar DB con el idRomm para saber si es de una Habitacion valida
+  
   const addFavoritesUserId = await db.addHostOrFav(idUser, { 'favorites': idRoom });
 
   return addFavoritesUserId;
