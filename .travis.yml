@@ -3,18 +3,18 @@ cache:
   directories:
     - node_modules
     - ~/.npm
-  node_js:
-    - 12
-  git:
-    depth: 3
-  script:
-    - yarn test
-  notifications:
-    email:
-      recipients:
-        - jhoguer@gmail.com
-      on_success: always
-      on_failure: always
+node_js:
+  - 12
+git:
+  depth: 3
+script:
+  - yarn test
+notifications:
+  email:
+    recipients:
+      - jhoguer@gmail.com
+    on_success: always
+    on_failure: always
 deploy:
   provide: heroku
   skip-cleanup: true
