@@ -4,8 +4,8 @@ module.exports = checkAuth = (action) => {
   const middleware = (req, res, next) => {
     //console.log('Se imprime el req en secure->', req.headers)
     switch(action) {
-      case 'addFavorites':
-        const { id: owner } = req.params
+      case 'addRoom':
+        const { idHost: owner } = req.body;
         auth.check.own(req, owner)
         next()
         break

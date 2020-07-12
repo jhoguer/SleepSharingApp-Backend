@@ -5,7 +5,7 @@ const err = (message, code) => {
     e.statusCode = code
   }
 
-  return e
+  return e.message;
 }
 
 module.exports = err

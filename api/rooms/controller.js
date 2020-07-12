@@ -16,9 +16,7 @@ const addRoom = async (roomData) => {
   
   const { idHost,  } = roomData;  
   // Consultar en la BD si ese IDHost Existe
-  
 
-  
   const createdRoomId = await db.create(collection, roomData);
 
   // const updatedUserId = await db.addHost(createdRoomId, idHost)

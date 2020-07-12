@@ -1,6 +1,7 @@
 const express = require('express');
 const controller = require('./controller');
 const response = require('../../utils/response');
+const secure = require('./secure');
 
 
 const router = express.Router();
@@ -30,7 +31,7 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', secure('addRoom'), (req, res, next) => {
   const roomData = req.body || {};
 
   controller.addRoom(roomData)
