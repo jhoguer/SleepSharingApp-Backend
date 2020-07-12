@@ -4,13 +4,10 @@ const error = require('../utils/error');
 
 
 const secret = config.jwtSecret;
-const secret = 'PalabraSecreta';
 
 
 const sign = data => {
   data = JSON.parse(JSON.stringify(data));
-
-  console.log('PALABRA SECRETA', secret);
 
   return jwt.sign(data, secret);
 }
