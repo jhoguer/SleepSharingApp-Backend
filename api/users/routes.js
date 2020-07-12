@@ -2,6 +2,8 @@ const express = require('express');
 const controller = require('./controller');
 const response = require('../../utils/response');
 const secure = require('./secure');
+const { userIdSchema, createUsersSchema } = require('../../utils/schemas/users');
+const validationHandler = require('../../utils/validationHandler');
 
 
 const router = express.Router();
@@ -17,7 +19,7 @@ router.get('/', (req, res, next) => {
   })
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', validationHandler(createUsersSchema), (req, res, next) => {
   const userData = req.body || {};
 
   controller.addUser(userData)

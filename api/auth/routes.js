@@ -11,7 +11,8 @@ router.post('/login', (req, res, next) => {
       response.success(req, res, token, 200)
     })
     .catch( err => {
-      response.error(req, res, err.message, 400)
+      // response.error(req, res, err.message, 400)
+      next(err);
     })
 })
 

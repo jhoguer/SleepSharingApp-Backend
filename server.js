@@ -4,7 +4,8 @@ const { config } = require('./config');
 const rooms = require('./api/rooms/routes');
 const users = require('./api/users/routes');
 const auth = require('./api/auth/routes');
-const error = require('./utils/error');
+// const error = require('./utils/error');
+const { logError, errorHandler } = require('./utils/error');
 
 const app = express();
 
@@ -24,8 +25,8 @@ app.use('/api/auth', auth);
 
 
 // Errors middleware
-
-app.use(error);
+app.use(logError);
+app.use(errorHandler);
 
 // Server
 app.listen(config.port, () => {

@@ -2,6 +2,8 @@ const express = require('express');
 const controller = require('./controller');
 const response = require('../../utils/response');
 const secure = require('./secure');
+const { roomIdSchema, createRoomSchema } = require('../../utils/schemas/rooms');
+const validationHandler = require('../../utils/validationHandler');
 
 
 const router = express.Router();
@@ -19,7 +21,7 @@ router.get('/', (req, res, next) => {
 
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', validationHandler({ id: roomIdSchema }, 'params'), (req, res, next) => {
   const {id} = req.params || '';
   console.log('Id en routes======>', id);
   controller.get(id)
@@ -31,7 +33,7 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.post('/', secure('addRoom'), (req, res, next) => {
+router.post('/', secure('addRoom'), validationHandler(createRoomSchema), (req, res, next) => {
   const roomData = req.body || {};
 
   controller.addRoom(roomData)

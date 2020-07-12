@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { config } = require('../config/index');
-const error = require('../utils/error');
+// const error = require('../utils/error');
 
 
 const secret = config.jwtSecret;
@@ -17,14 +17,14 @@ const verify = token => {
     return jwt.verify(token, secret);
     
   } catch (err) {
-    throw error(err.message, 500);
+     throw new Error(err.message);
   }
 }
 
 const getToken = auth => {
-  if (!auth) throw error('Token is empty!');
+  if (!auth)  throw new Error('Token is empty!');
 
-  if (auth.indexOf('Bearer') === -1) throw error('invalid format!');
+  if (auth.indexOf('Bearer') === -1)  throw new Error('invalid format!');
 
   let token = auth.replace('Bearer ', '')
 
@@ -46,7 +46,7 @@ const check = {
     // console.log('El reqqqq ', req);
     const decoded = decodeHeader(req);
 
-    if (decoded.idUser !== owner) throw error('Invalid permissions!', 401);
+    if (decoded.idUser !== owner)  throw new Error('Invalid permissions!', 401);
   },
   logged: req => {
     const decoded = decodeHeader(req)
