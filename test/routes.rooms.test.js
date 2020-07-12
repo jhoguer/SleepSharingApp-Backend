@@ -11,8 +11,6 @@ describe('routes - rooms', function() {
     './controller': RoomsServiceMock
   });
 
-  console.log('Request', route);
-  console.log('Request');
   const request = testServer(route);
 
   describe('GET /rooms', function() {
@@ -20,5 +18,33 @@ describe('routes - rooms', function() {
       request.get('/api/rooms').expect(200, done);
     });
   });
+
+  it('Should respond with the list of rooms', function(done) {
+    request.get('/api/rooms').end((err, res) => {
+      assert.deepEqual(res.body, {
+        error: '',
+        body: roomsMock
+      });
+
+      done();
+    });
+  });
+    
+    describe('POST /rooms', function() {
+      it('Should respond status 201', function(done) {
+        request.post('/api/rooms').expect(201, done);
+      });
+    });
+
+    it('Should respond with the id new room created', function(done) {
+      request.post('/api/rooms').end((err, res) => {
+        assert.match(res.body, {
+          error: '',
+          body: roomsMock[0]._id
+        });
+  
+        done();
+      });
+    });
 
 });

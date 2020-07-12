@@ -1,15 +1,16 @@
 const express = require('express');
-const controller = require('./controller');
+const RoomController = require('./controller');
 const response = require('../../utils/response');
-const secure = require('./secure');
 
 
 const router = express.Router();
 
+const roomController = new RoomController()
+
 router.get('/', (req, res, next) => {
   // const searchParams = req.query.roomParam || {};
 
-  controller.getRooms()
+  roomController.getRooms()
     .then(data => {
       response.success(req, res, data, 200);
     })
@@ -22,7 +23,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   const {id} = req.params || '';
   console.log('Id en routes======>', id);
-  controller.get(id)
+  roomController.get(id)
     .then(data => {
       response.success(req, res, data, 200);
     })
@@ -31,10 +32,10 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-router.post('/', secure('addRoom'), (req, res, next) => {
+router.post('/', (req, res, next) => {
   const roomData = req.body || {};
 
-  controller.addRoom(roomData)
+  roomController.addRoom(roomData)
     .then(data => {
       response.success(req, res, data, 201);
     })
