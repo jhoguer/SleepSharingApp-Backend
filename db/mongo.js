@@ -38,10 +38,10 @@ class MongoLib {
       })
   }
 
-  getAll(collection) {
+  getAll(collection, params) {
     return this.connect()
       .then(db => {
-        return db.collection(collection).find().toArray();
+        return db.collection(collection).find(params).toArray();
       })
   }
 

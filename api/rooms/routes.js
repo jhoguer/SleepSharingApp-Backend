@@ -9,9 +9,18 @@ const validationHandler = require('../../utils/validationHandler');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  // const searchParams = req.query.roomParam || {};
+  let { location } = req.query;
 
-  controller.getRooms()
+  let query;
+
+  if (!location) {
+    query = {};
+  } else {
+    location = location.toUpperCase();
+    query = { location: location }
+  }
+
+  controller.getRooms(query)
     .then(data => {
       response.success(req, res, data, 200);
     })
@@ -23,7 +32,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', validationHandler({ id: roomIdSchema }, 'params'), (req, res, next) => {
   const {id} = req.params || '';
-  console.log('Id en routes======>', id);
   controller.get(id)
     .then(data => {
       response.success(req, res, data, 200);

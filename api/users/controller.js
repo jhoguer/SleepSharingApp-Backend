@@ -11,6 +11,8 @@ const addUser = async (userData) => {
     username: userData.email,
     password: userData.password
   }
+  
+  delete userData.password;
 
   // Validar que todos los datos lleguen
   if (userData.typeUser === 1) {
@@ -18,6 +20,8 @@ const addUser = async (userData) => {
   } else {
     userData.typeUser = 'Huesped';
   }
+
+
 
   try {
     const createdUserId = await db.create(collection, userData);  

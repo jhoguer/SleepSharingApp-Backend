@@ -12,10 +12,11 @@ const db = new MongoLib();
 // }
 
 const addRoom = async (roomData) => {
-  // Validar que todos los datos vengan.
   
-  const { idHost,  } = roomData;  
+  const { idHost } = roomData;  
   // Consultar en la BD si ese IDHost Existe
+
+  roomData.location = roomData.location.toUpperCase();
 
   const createdRoomId = await db.create(collection, roomData);
 
@@ -24,7 +25,7 @@ const addRoom = async (roomData) => {
   const roomAddToUserId = await db.addHostOrFav(idHost, { 'ownRooms': createdRoomId });
 
 
-  if (!createdRoomId && !updatedRoomId) {
+  if (!createdRoomId && !roomAddToUserId) {
     throw new Error('Error server-');
   } 
   
@@ -32,8 +33,9 @@ const addRoom = async (roomData) => {
     
 }
 
-const getRooms = async () => {
-  const allRooms = await db.getAll(collection);
+const getRooms = async (query) => {
+    const allRooms = await db.getAll(collection, query);
+  
   return allRooms;
 }
 
