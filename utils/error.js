@@ -1,13 +1,7 @@
 
 
 const withErrorStack = (error, stack) => {
-  // let e = new Error(message)
 
-  // if (code) {
-  //   e.statusCode = code
-  // }
-
-  // return { error, stack };
   return {error};
   
 }

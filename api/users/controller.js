@@ -14,7 +14,6 @@ const addUser = async (userData) => {
   
   delete userData.password;
 
-  // Validar que todos los datos lleguen
   if (userData.typeUser === 1) {
     userData.typeUser = 'Anfitrion';
   } else {
@@ -43,22 +42,15 @@ const getUsers = async () => {
 }
 
 const addFavorites = async (idUser, idRoom) => {
-  // Consultar DB con el idRomm para saber si es de una Habitacion valida
   
   const addFavoritesUserId = await db.addHostOrFav(idUser, { 'favorites': idRoom });
 
   return addFavoritesUserId;
 }
 
-// const addRoomToHost = async (idUser, idRoom) => {
-//   const updatedUserId = await db.addHost(idUser, idRoom);
-
-//   return updatedUserId;
-// }
 
 module.exports = {
   addUser,
   getUsers,
-  // addRoomToHost,
   addFavorites
 }

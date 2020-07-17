@@ -4,24 +4,15 @@ const collection = 'rooms';
 
 const db = new MongoLib();
 
-
-// const addRoomToHost = async (id, idHost) => {
-//   const updatedRoomId = await db.addHost(id, idHost);
-//   console.log('Id de la Room actualizada', updatedRoomId);
-//   return updatedRoomId;
-// }
-
 const addRoom = async (roomData) => {
   
   const { idHost } = roomData;  
-  // Consultar en la BD si ese IDHost Existe
 
   roomData.location = roomData.location.toUpperCase();
 
   const createdRoomId = await db.create(collection, roomData);
 
-  // const updatedUserId = await db.addHost(createdRoomId, idHost)
-  // console.log('Id de la Room actualizada despues de crear room', updatedUserId);
+
   const roomAddToUserId = await db.addHostOrFav(idHost, { 'ownRooms': createdRoomId });
 
 

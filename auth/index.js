@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { config } = require('../config/index');
-// const error = require('../utils/error');
 
 
 const secret = config.jwtSecret;
@@ -43,7 +42,6 @@ const decodeHeader = req => {
 
 const check = {
   own: (req, owner) => {
-    // console.log('El reqqqq ', req);
     const decoded = decodeHeader(req);
 
     if (decoded.idUser !== owner)  throw new Error('Invalid permissions!', 401);
