@@ -4,17 +4,11 @@ const collection = 'rooms';
 
 const db = new MongoLib();
 
-const addRoom = async (roomData) => {
-  
+const addRoom = async (roomData) => {  
   const { idHost } = roomData;  
-
   roomData.location = roomData.location.toUpperCase();
-
   const createdRoomId = await db.create(collection, roomData);
-
-
   const roomAddToUserId = await db.addHostOrFav(idHost, { 'ownRooms': createdRoomId });
-
 
   if (!createdRoomId && !roomAddToUserId) {
     throw new Error('Error server-');
@@ -25,18 +19,15 @@ const addRoom = async (roomData) => {
 }
 
 const getRooms = async (query) => {
-    const allRooms = await db.getAll(collection, query);
-  
+  const allRooms = await db.getAll(collection, query);  
   return allRooms;
 }
 
 const get = async (id) => {
   if (!id) {
     throw new Error('El id no llego');
-  }
-  
+  }  
   const room = await db.get(collection, id);
-
   return room;
 }
 
